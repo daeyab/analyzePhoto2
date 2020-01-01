@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_size">16dp</dimen>
+    <dimen name="normal_height">48dp</dimen>
+    <dimen name="border_height">3dp</dimen>
+    <dimen name="text_size">14dp</dimen>
+    <dimen name="content_margin">24dp</dimen>
+    <dimen name="content_padding">16dp</dimen>
+    <dimen name="image_height">200dp</dimen>
+    <dimen name="button_height">48dp</dimen>
+</resources>

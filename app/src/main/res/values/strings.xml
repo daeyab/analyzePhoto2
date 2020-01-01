@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">analyzePhoto</string>
+    <string name="main_title">이미지 분석 해드립니다.</string>
+    <string name="please_upload_image">이미지 업로드를 해주세요.</string>
+    <string name="image_upload">이미지 업로드</string>
+    <string name="camera">카메라</string>
+    <string name="gallery">사진첩</string>
+</resources>

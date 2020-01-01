@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/upload_camera"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/content_padding"
+        android:background="@drawable/button_background"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"
+        android:text="@string/camera"
+        android:textColor="@color/white"
+        android:gravity="center"/>
+    <TextView
+        android:id="@+id/upload_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginLeft="@dimen/content_padding"
+        android:layout_marginBottom="@dimen/content_padding"
+        android:layout_marginRight="@dimen/content_padding"
+        android:background="@drawable/button_background"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"
+        android:text="@string/gallery"
+        android:textColor="@color/white"
+        android:gravity="center"/>
+</LinearLayout>
