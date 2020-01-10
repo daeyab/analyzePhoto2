@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     private val GALLERY_PERMISSION_REQUEST = 1001
     private val FILE_NAME = "picture.jpg"
     private var uploadChooser:UploadChooser?=null
-    private val CLOUD_VISION_API_KEY="AIzaSyDhcd_FT8bg6UGS_MCe80swjveZ9fKFX2I"
+    private val CLOUD_VISION_API_KEY="AIzaSyCW2mDIQKPYAk8YQd6PpIwM-55G311xOC4"
     private val ANDRIOD_PACKAGE_HEADER="X-Andriod-Package"
     private val ANDRIOD_CERTIFICATION_HEADER="X-Andriod_Cert" //틀린 부분2
     private val MAX_LABEL_RESULTS=10
@@ -110,18 +110,16 @@ class MainActivity : AppCompatActivity() {
                 val photoUri= FileProvider.getUriForFile(this,packageName+ ".provider",createCameraFile())//저장된 경로
                 uploadImage(photoUri)
             }
-            GALLERY_PERMISSION_REQUEST->{
-               data?.let{ //data가 null 이 아니라면 let을 실행하는 거와 동일 if(data!=null)이런 느낌
-                   uploadImage(it.data)
-               }
-            }
+            GALLERY_PERMISSION_REQUEST -> data?.let { uploadImage(it.data) }
+
         }
     }
 
     private fun uploadImage(imageUri : Uri){
         val bitmap:Bitmap=MediaStore.Images.Media.getBitmap(contentResolver,imageUri) //원리 이해할 필요 ㄴ
         uploaded_image.setImageBitmap(bitmap)
-//            uploadChooser?.dismiss()
+        uploadChooser?.dismissAllowingStateLoss()
+        requestCloudVisionApi(bitmap)
     }
 
     private fun requestCloudVisionApi(bitmap: Bitmap){
@@ -176,10 +174,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     inner class ImageRequestTask constructor(activity: MainActivity, val request: Vision.Images.Annotate) : AsyncTask<Any,Void,String>(){
-        private val weakReferance:WeakReference<MainActivity>
-        init{weakReferance= WeakReference(activity)
-        }
-        override fun doInBackground(vararg params: Any?): String {
+        private val weakReference:WeakReference<MainActivity>
+        init{weakReference= WeakReference(activity)}
+                override fun doInBackground(vararg params: Any?): String {
             try {
                 val response= request.execute()
                 return convertResponseToString(response)
@@ -187,7 +184,7 @@ class MainActivity : AppCompatActivity() {
             catch (e:Exception){
                 e.printStackTrace()
             }
-            return "실패"
+            return "doInBackground 분석 실패"
         }
 
         override fun onPostExecute(result: String?) {
@@ -196,15 +193,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun convertResponseToString(response:BatchAnnotateImagesResponse):String{
-        val message=StringBuilder("분석결과\n")
+        val message=StringBuilder("분석 결과\n")
         val labels=response.responses[0].labelAnnotations
         labels?.let{
             it.forEach{
                 message.append(String.format(Locale.US,"%.3f:%s",it.score,it.description))
+                message.append("\n")
             }
             return message.toString()
         }
-        return "분석 실패"
+        return "convertResponseToString 분석 실패"
     }
 
     private fun createCameraFile(): File {

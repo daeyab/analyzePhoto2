@@ -17,6 +17,7 @@ class PackageManagerUtil{
         }
         catch (e:java.lang.Exception){
             return null
+
         }
     }
 
